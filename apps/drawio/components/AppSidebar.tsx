@@ -132,7 +132,7 @@ export function AppSidebar({ isOpen, onClose, canvasColor, setCanvasColor, isMob
                             )}
 
                             <Separator className="my-4 dark:bg-default-border-color-dark" />
-                            <SidebarLinkItem icon={Github} label="GitHub" url="https://github.com/coderomm" />
+                            <SidebarLinkItem icon={Github} label="GitHub" url="https://github.com/ezeslucky/drawio.git" />
                             <SidebarLinkItem icon={Twitter} label="Twitter / X" url="https://x.com/ezeslucky" />
                             <SidebarLinkItem icon={Linkedin} label="Linkedin" url="https://www.linkedin.com/in/ezeslucky/" />
                         </nav>

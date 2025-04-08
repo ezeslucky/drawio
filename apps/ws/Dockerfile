@@ -1,0 +1,42 @@
+FROM node:20-alpine AS base
+
+# Install pnpm
+RUN npm install -g pnpm
+
+WORKDIR /usr/src/app
+
+# Copy necessary files for dependency installation
+COPY ./packages ./packages
+COPY ./package.json ./package.json
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ./turbo.json ./turbo.json
+COPY ./apps/ws ./apps/ws
+
+# Copy the entire project
+# COPY . .
+
+# Install global Prisma CLI
+RUN npm install -g prisma@6.5.0
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Generate database
+# RUN pnpm run db:generate
+
+# Change to the packages/db directory and generate Prisma client
+WORKDIR /usr/src/app/packages/db
+RUN prisma generate
+
+# Change back to the root directory
+WORKDIR /usr/src/app
+
+# Build the websocket service
+RUN pnpm run build
+
+# Expose the port
+EXPOSE 8080
+
+# Start the ws service
+CMD ["pnpm", "run", "start:ws"]
