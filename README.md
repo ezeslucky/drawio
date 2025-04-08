@@ -1,84 +1,90 @@
-# Turborepo starter
+# 🎨 Drawio | Hand-drawn look & feel • Collaborative • Secure
 
-This Turborepo starter is maintained by the Turborepo core team.
+---
 
-## Using this example
+**Drawio** is a web-based collaborative whiteboard where multiple users can draw, edit, and brainstorm together in real time. Whether solo or in a group session, the app offers a smooth, intuitive canvas experience with real-time sync, shape tools, editable text, and privacy-focused end-to-end encryption — all without needing an account.
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+### ✅ Core Features
 
-## What's inside?
+- **Canvas Drawing**: Freehand, shapes, and editable text
+- **Rough.js Support**: Optional sketch-style drawing
+- **Perfect-freehand Support**: Hand drawn feel
+- **Eraser Tool**: Remove individual shapes
+- **Editable Text**: Double-click to edit on canvas
 
-This Turborepo includes the following packages/apps:
+---
 
-### Apps and Packages
+### 🔗 Collaboration
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- **Real-time Sync**: WebSocket-powered live drawing
+- **Multi-Tab Awareness**: No duplicate join/leave events
+- **Optimistic Updates**: Instant feedback before server response
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+---
 
-### Utilities
+### 🔐 **Privacy & End-to-End Encryption (E2EE)** in Drawio
 
-This Turborepo has some additional tools already setup for you:
+Drawio is built with **privacy by design** to ensure that no sensitive drawing data can be accessed by anyone other than the intended participants.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
 
-### Build
+### 🧠 **Key Never Touches the Server**
 
-To build all apps and packages, run the following command:
+- The **encryption key** after the comma (`xyz456`) is part of the URL fragment (`#...`).
+- This fragment is **never sent** in HTTP requests, meaning:
+    
+    > The server cannot see or store the encryption key.
+    > 
 
-```
-cd my-turborepo
-pnpm build
-```
+### 🔒 **Client-Side Only Decryption**
 
-### Develop
+- All encrypted drawing data is transmitted over WebSocket.
+- The **decryption and rendering** happen completely on the client-side using the `key` from the URL.
+- Even if someone intercepts the WebSocket traffic, they cannot decrypt the data without the key.
 
-To develop all apps and packages, run the following command:
+### 🛡️ **Benefits**
 
-```
-cd my-turborepo
-pnpm dev
-```
+- No one — not even the server — can read what’s drawn in a room without the key.
+- Ensures **confidentiality** for private brainstorming, teaching, or design sessions.
+- Works like **Excalidraw's E2EE rooms**, but tailored for your collaborative drawing logic.
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+### 🧠 Reliability
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- **Message Queue**: Stores unsent messages in memory/localStorage
+- **Auto Retry**: Flushes queued messages on reconnect
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+---
 
-```
-cd my-turborepo
-npx turbo login
-```
+### 🧭 Modes
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+- **Standalone Mode**: Offline/local drawing
+- **Room Mode**: Collaborative sessions
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+---
 
-```
-npx turbo link
-```
+### ⚙️ Tech Stack
 
-## Useful Links
+- **Frontend**: React (Vite), TypeScript, Tailwind CSS
+- **Canvas**: HTML Canvas API + Custom Engine
+- **Realtime**: Native WebSocket (`useWebSocket` hook)
+- **Security**: Hash-based E2EE
 
-Learn more about the power of Turborepo:
+---
 
-- [Tasks](https://turbo.build/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/docs/reference/command-line-reference)
+
+
+
+### 🌍 Open Source & Contributions
+
+I want **Drawio** to be open source so that other students and developers can explore and learn from it.  
+If you'd like to contribute—whether it's improving the UI, optimizing performance, or adding new features—feel free to open an issue or submit a pull request!
+
+---
+
+## 📄 License
+
+This project is licensed under a **Custom Personal Use License** — you may view and learn from the code, but **commercial use, redistribution, or claiming authorship is strictly prohibited**.  
+See the full [LICENSE](./LICENSE) for details.
