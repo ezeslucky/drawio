@@ -1,0 +1,76 @@
+name: Deploy the frontend
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/drawio/**'
+      - 'packages/**'
+      - '.github/workflows/cd_frontend.yml'
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Verify secrets
+        run: |
+          if [ -z "${{ secrets.DATABASE_URL }}" ]; then
+            echo "Error: DATABASE_URL secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.JWT_SECRET }}" ]; then
+            echo "Error: JWT_SECRET secret is not set"
+            exit 1
+          fi
+          $secrets_valid
+
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile.frontend
+          provenance: false
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            WEBSOCKET_URL=${{ secrets.WEBSOCKET_URL }}
+          push: true
+          tags: |
+            coderomm/drawio:latest
+            coderomm/drawio:${{ github.sha }}
+
+      - name: Check SSH key presence (for debug)
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -n 15
+
+      # - name: Deploy to VM
+      #   uses: appleboy/ssh-action@v1.1.0
+      #   with:
+      #     host: ${{ secrets.VM_HOST }}
+      #     username: ${{ secrets.VM_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       docker pull coderomm/drawio:${{ github.sha }}
+      #       docker stop drawio-frontend || true
+      #       docker rm drawio-frontend || true
+      #       docker run -d \
+      #         --name drawio-frontend \
+      #         --restart always \
+      #         -p 3000:3000 \
+      #         -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+      #         -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+      #         -e WEBSOCKET_URL=${{ secrets.WEBSOCKET_URL }} \
+      #         coderomm/drawio:${{ github.sha }}
+

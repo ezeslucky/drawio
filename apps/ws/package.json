@@ -1,0 +1,34 @@
+{
+  "name": "ws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx esbuild src/index.ts --bundle --outfile=dist/index.js --platform=node --tsconfig=tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "pnpm run build && pnpm run start",
+    "start:ws": "cd apps/ws && pnpm run build && pnpm run start"
+  },
+  "devDependencies": {
+    "@repo/common": "workspace:*",
+    "@repo/db": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/ws": "^8.5.14",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "@types/cookie": "^1.0.0",
+    "@types/dotenv": "^8.2.3",
+    "@types/jsonwebtoken": "^9.0.8",
+    "cookie": "^1.0.2",
+    "dotenv": "^16.4.7",
+    "esbuild": "^0.25.1",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^11.1.0",
+    "ws": "^8.18.0"
+  }
+}
