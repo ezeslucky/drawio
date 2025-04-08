@@ -29,14 +29,6 @@
 Drawio is built with **privacy by design** to ensure that no sensitive drawing data can be accessed by anyone other than the intended participants.
 
 
-### 🧠 **Key Never Touches the Server**
-
-- The **encryption key** after the comma (`xyz456`) is part of the URL fragment (`#...`).
-- This fragment is **never sent** in HTTP requests, meaning:
-    
-    > The server cannot see or store the encryption key.
-    > 
-
 ### 🔒 **Client-Side Only Decryption**
 
 - All encrypted drawing data is transmitted over WebSocket.
