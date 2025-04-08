@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "prettier": "^3.5.3",
+    "tailwindcss-animate": "^1.0.7",
     "turbo": "^2.5.0",
     "typescript": "5.8.2"
   },
